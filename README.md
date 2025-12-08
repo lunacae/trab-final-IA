@@ -12,12 +12,12 @@ source nome_do_ambiente_virtual/bin/activate
 # nome_do_ambiente_virtual\Scripts\Activate
 ```
 
-## Executando o projeto
+## Rodando o projeto
 
 Para executar o projeto é necessário ter o python3 e pip instalados na máquina, você pode fazer a instalação do python3 [aqui](https://www.python.org/downloads/). Para instalar o pip (gerenciador de pacotes do python) siga as instruções [deste site](https://pip.pypa.io/en/stable/installation/).
 Para iniciar rode os comandos abaixo:
 
 ```shell
-pip install -i requirements.txt
+pip install -r requirements.txt
 python3 RL-game.py
 ```
