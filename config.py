@@ -54,5 +54,8 @@ def DECAY_STEP() -> int:
 def TRAIN() -> bool:
     return Config.TRAIN
 
+def set_train(new_value):
+    Config.TRAIN = new_value
+
 def RENDERS() -> bool:
     return Config.RENDERS
