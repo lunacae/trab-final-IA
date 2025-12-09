@@ -1,25 +1,28 @@
+treinando = False # Mude para False para testar o modelo/agent
+
+#Troque os valores para treino ou exibição do modelo selecionado
 class Config:
     # Reward configs
-    STEP_REWARD = -1
-    WALL_REWARD = -5
-    HOLE_REWARD = -100
-    GOAL_REWARD = 100
+    STEP_REWARD = 0
+    WALL_REWARD = 0
+    HOLE_REWARD = 0
+    GOAL_REWARD = 0
 
     # Q-Learning configs
-    ALPHA = 0.1
-    GAMMA = 0.9
-    EPSILON = 1
+    ALPHA = 0
+    GAMMA = 0
+    EPSILON = 0
 
     SIMMULATION_NUMBER = 50000 # Padrão para todos os modelos
-    ALPHA_DECAY = 0.999
-    EPSILON_DECAY = 0.9
-    DECAY_STEP = 10
+    ALPHA_DECAY = 0
+    EPSILON_DECAY = 0
+    DECAY_STEP = 0
 
     # Train or Test Model/Agent
     # Set TRAIN to True and RENDERS to False to train the model/agent
     # Set TRAIN to False and RENDERS to True to test the model/agent
-    TRAIN = False
-    RENDERS = True
+    TRAIN = treinando
+    RENDERS = not treinando
 
 def STEP_REWARD() -> int:
     return Config.STEP_REWARD

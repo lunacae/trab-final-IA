@@ -6,10 +6,10 @@ O primeiro passo é criar um ambiente virtual (venv) com python, para isso siga 
 Comandos que serão executados:
 
 ```shell
-python3 -m venv nome_do_ambiente_virtual
-source nome_do_ambiente_virtual/bin/activate
+python3 -m venv trab-ia
+source trab-ia/bin/activate
 # Caso use windows o comando está abaixo
-# nome_do_ambiente_virtual\Scripts\Activate
+# trab-ia\Scripts\Activate
 ```
 
 ## Rodando o projeto
@@ -21,3 +21,7 @@ Para iniciar rode os comandos abaixo:
 pip install -r requirements.txt
 python3 RL-game.py
 ```
+
+## Modelos Treinados
+
+Você pode encontrar exemplos de modelos já treinados na pasta [Models](Models/).
