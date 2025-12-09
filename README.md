@@ -18,6 +18,6 @@ Para executar o projeto é necessário ter o python3 e pip instalados na máquin
 Para iniciar rode os comandos abaixo:
 
 ```shell
-pip install -i requirements.txt
+pip install -r requirements.txt
 python3 RL-game.py
 ```
