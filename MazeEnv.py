@@ -5,10 +5,9 @@ import matplotlib
 matplotlib.use('TkAgg') 
 import matplotlib.pyplot as plt
 import random
-from config import STEP_REWARD, WALL_REWARD, HOLE_REWARD, GOAL_REWARD
 
 class MazeEnv(gym.Env):
-    def __init__(self):
+    def __init__(self, config_arg):
         super(MazeEnv, self).__init__()
 
         # Define grid size
@@ -40,6 +39,9 @@ class MazeEnv(gym.Env):
         self.grid = None
         self.grid_initialization()
 
+        #Models config
+        self.models_config = config_arg
+        
     def grid_initialization(self):
         self.turn = 0
         
@@ -111,17 +113,17 @@ class MazeEnv(gym.Env):
 
         # Define rewards and terminal states
         done = False
-        reward = STEP_REWARD()  # small negative reward for each step
+        reward = self.models_config.STEP_REWARD # small negative reward for each step
 
         if new_pos_value == self.WALL:
             self.agent_pos = prev_pos  # revert move
-            reward = WALL_REWARD()
+            reward = self.models_config.WALL_REWARD
         elif new_pos_value == self.HOLE:
             done = True
-            reward = HOLE_REWARD()
+            reward = self.models_config.HOLE_REWARD
         elif self.agent_pos == self.goal_pos:
             done = True
-            reward = GOAL_REWARD()
+            reward = self.models_config.GOAL_REWARD
 
         # Update grid
         if new_pos_value != self.WALL:

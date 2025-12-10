@@ -1,61 +1,23 @@
 class Config:
-    # Reward configs
-    STEP_REWARD = -0.1
-    WALL_REWARD = -5
-    HOLE_REWARD = -100
-    GOAL_REWARD = 100
+    def __init__(self, args):
+        # Reward configs
+        self.STEP_REWARD = float(args.step_reward) if args.step_reward is not None else -0.1
+        self.WALL_REWARD = float(args.wall_reward) if args.wall_reward is not None else -5
+        self.HOLE_REWARD = float(args.hole_reward) if args.hole_reward is not None else -100
+        self.GOAL_REWARD = float(args.goal_reward) if args.goal_reward is not None else -100
 
-    # Q-Learning configs
-    ALPHA = 0.0003
-    GAMMA = 0.99
-    EPSILON = 1
-    SIMMULATION_NUMBER = 10
-    ALPHA_DECAY = 0.999
-    EPSILON_DECAY = 0.005
-    DECAY_STEP = 1000
+        # Q-Learning configs
+        self.ALPHA = float(args.alpha) if args.alpha is not None else 0.0003
+        self.GAMMA = float(args.gamma) if args.gamma is not None else 0.99
+        self.EPSILON = float(args.epsilon) if args.epsilon is not None else 1
+        self.ALPHA_DECAY = float(args.alpha_decay) if args.alpha_decay is not None else 0.999
+        self.EPSILON_DECAY = float(args.epsilon_decay) if args.epsilon_decay is not None else 0.005
+        self.DECAY_STEP = float(args.decay_step) if args.decay_step is not None else 1000
 
-    # Train or Test Model/Agent
-    TRAIN = True
-    RENDERS = True
+        # Train or Test Model/Agent
+        self.TRAIN = str.lower(args.train) == "true"
+        self.RENDER = str.lower(args.render) == "true"
 
-def STEP_REWARD() -> int:
-    return Config.STEP_REWARD
-
-def WALL_REWARD() -> int:
-    return Config.WALL_REWARD
-
-def HOLE_REWARD() -> int:
-    return Config.HOLE_REWARD
-
-def GOAL_REWARD() -> int:
-    return Config.GOAL_REWARD
-
-def ALPHA() -> float:
-    return Config.ALPHA
-
-def GAMMA() -> float:
-    return Config.GAMMA
-
-def EPSILON() -> float:
-    return Config.EPSILON
-
-def SIMMULATION_NUMBER() -> int:
-    return Config.SIMMULATION_NUMBER
-
-def ALPHA_DECAY() -> float:
-    return Config.ALPHA_DECAY
-
-def EPSILON_DECAY() -> float:
-    return Config.EPSILON_DECAY
-
-def DECAY_STEP() -> int:
-    return Config.DECAY_STEP
-
-def TRAIN() -> bool:
-    return Config.TRAIN
-
-def set_train(new_value):
-    Config.TRAIN = new_value
-
-def RENDERS() -> bool:
-    return Config.RENDERS
+    SIMMULATION_NUMBER = 50000
+# def SIMMULATION_NUMBER() -> int:
+#     return Config.SIMMULATION_NUMBER

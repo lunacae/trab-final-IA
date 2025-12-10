@@ -1,14 +1,7 @@
 import numpy as np
-import gymnasium as gym
-from gymnasium import spaces
-import matplotlib.pyplot as plt
 from collections import defaultdict
 import random
 import pickle
-from config import STEP_REWARD, WALL_REWARD, HOLE_REWARD, GOAL_REWARD
-from MazeEnv import MazeEnv
-from config import ALPHA, GAMMA, EPSILON, SIMMULATION_NUMBER, ALPHA_DECAY, EPSILON_DECAY, DECAY_STEP, TRAIN, RENDERS
-from stable_baselines3 import DQN
 
 class QLearningAgent:
     def __init__(self, action_space, learning_rate, discount_factor, epsilon):

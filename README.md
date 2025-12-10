@@ -41,3 +41,5 @@ python3 RL-game.py --train=True --ia-algorithm=ppo --model-path=./modelos/ppo
 # Roda o modelo treinado
 python3 RL-game.py --train=False --ia-algorithm=ppo --model-path=./modelos/ppo
 ```
+
+python3 RL-game.py --train=True --render=False --ia-algorithm=ppo --model-path=./modelos/ppo --step-reward=-0.1 --wall-reward=-5 --role-reward=-100 --goal-reward=100 --alpha=0.0003 --gamma=0.99 --epsilon=1 --alpha-decay=0.999 --epsilon-decay=0.005 --decay-step=1000

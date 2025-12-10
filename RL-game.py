@@ -1,26 +1,25 @@
 import argparse
 from stable_baselines3 import PPO
 from stable_baselines3.common.evaluation import evaluate_policy
-from config import STEP_REWARD, WALL_REWARD, HOLE_REWARD, GOAL_REWARD, set_train, ALPHA, GAMMA, EPSILON, SIMMULATION_NUMBER, ALPHA_DECAY, EPSILON_DECAY, DECAY_STEP, TRAIN, RENDERS
 from MazeEnv import MazeEnv
 from QLearning import QLearningAgent
-
+from config import Config
 global model_path
 global train
 train = True
 
 def run_ppo(model_path):
-    env = MazeEnv()
+    env = MazeEnv(input_config)
     try:
-        if TRAIN():
+        if input_config.TRAIN:
             model = PPO(
                 "MlpPolicy",       # MlpPolicy para observações vetoriais
                 env,
-                learning_rate=ALPHA(),      # Taxa de aprendizado tipica para PPO
+                learning_rate=input_config.ALPHA,      # Taxa de aprendizado tipica para PPO
                 n_steps=2048,              # Número de passos de ambiente coletados antes de cada atualização
                 batch_size=64,             # Tamanho do mini-lote (pode ser maior que no DQN)
                 n_epochs=10,               # Número de vezes que o mini-lote é percorrido
-                gamma=GAMMA(),
+                gamma=input_config.GAMMA,
                 gae_lambda=0.95,           # Parâmetro para Advantage Estimation
                 clip_range=0.2,            # Parâmetro central do PPO (corte de gradiente)
                 verbose=1,
@@ -29,7 +28,7 @@ def run_ppo(model_path):
             )
 
             # 3. Treinamento
-            TOTAL_TIMESTEPS = 200000
+            TOTAL_TIMESTEPS = 50000
             print(f"\nIniciando o treinamento por {TOTAL_TIMESTEPS} passos...")
             model.learn(total_timesteps=TOTAL_TIMESTEPS)
             print("Treinamento concluído.")
@@ -44,13 +43,13 @@ def run_ppo(model_path):
             model = PPO.load(model_path)
             state, _ = env.reset(isnumpy = True)
             done = False
-            if RENDERS():
+            if input_config.RENDER:
                 env.render()
             while not done:
                 action, _states = model.predict(state, deterministic=False)
                 state, reward, done, _, _ = env.step(action, isnumpy = True)
                 print(f"Action: {action}, Reward: {reward}")
-                if RENDERS():
+                if input_config.RENDER:
                     env.render()
     except Exception as ex:
         print(ex)
@@ -59,17 +58,17 @@ def run_ppo(model_path):
         env.close()
 
 def run_qlearning(model_path):
-    env = MazeEnv()
+    env = MazeEnv(input_config)
     try:
-        if TRAIN():
-            agent = QLearningAgent(env.action_space, ALPHA(), GAMMA(), EPSILON())
-            episodes = SIMMULATION_NUMBER()
+        if input_config.TRAIN:
+            agent = QLearningAgent(env.action_space, input_config.ALPHA, input_config.GAMMA, input_config.EPSILON)
+            episodes = input_config.SIMMULATION_NUMBER
             total_reward = 0
             sucess = 0
             for episode in range(1, episodes+1):
                 state, _ = env.reset(isnumpy = False)
                 done = False
-                if RENDERS():
+                if input_config.RENDER:
                     env.render()
 
                 while not done:
@@ -79,16 +78,16 @@ def run_qlearning(model_path):
                     agent.update(state, action, reward, next_state)
                     state = next_state
                     total_reward += reward
-                    if reward == GOAL_REWARD():
+                    if reward == input_config.GOAL_REWARD:
                         sucess += 1
-                    if RENDERS():
+                    if input_config.RENDER:
                         env.render()
 
                 # Parameter Decay
-                if episode % DECAY_STEP() == 0:
-                    agent.epsilon *= EPSILON_DECAY()
-                    agent.alpha *= ALPHA_DECAY()
-                    print(f"Episode {episode}, Mean Reward: {(total_reward/DECAY_STEP()):.2f}, Success Rate: {(sucess/DECAY_STEP()):.2f}")
+                if episode % input_config.DECAY_STEP == 0:
+                    agent.epsilon *= input_config.EPSILON_DECAY
+                    agent.alpha *= input_config.ALPHA_DECAY
+                    print(f"Episode {episode}, Mean Reward: {(total_reward/input_config.DECAY_STEP):.2f}, Success Rate: {(sucess/input_config.DECAY_STEP):.2f}")
                     print("Explore Chance (epsilon): ", agent.epsilon)
                     print("Exploit Chance (1-epsilon): ", 1-agent.epsilon)
                     print("Learning Rate (alpha): ", agent.alpha)
@@ -102,10 +101,10 @@ def run_qlearning(model_path):
         else:
             state, _ = env.reset(isnumpy = False)
             done = False
-            if RENDERS():
+            if input_config.RENDER:
                 env.render()
             # Load the trained agent
-            agent = QLearningAgent(env.action_space, ALPHA(), GAMMA(), 0)
+            agent = QLearningAgent(env.action_space, input_config.ALPHA, input_config.GAMMA, 0)
             print("Opening agent model")
             agent.load_model(model_path + '.pkl')
 
@@ -113,7 +112,7 @@ def run_qlearning(model_path):
                 action = agent.get_action(state)
                 state, reward, done, _, _ = env.step(action, isnumpy = False)
                 print(f"Action: {action}, Reward: {reward}")
-                if RENDERS():
+                if input_config.RENDER:
                     env.render()
     except Exception as ex:
         print(ex)
@@ -121,19 +120,21 @@ def run_qlearning(model_path):
     finally:
         env.close()
 
-def main(args):
-    print("Iniciando programa...")
+def initialize_config(args) -> Config:
+    config = Config(args)
+    return config
+
+def validate_parameters(args):
     # Valida argumentos obrigatórios
     if args.model_path is None:
         raise Exception("model-path cannot be none!")
     if args.ia_algorithm is None:
         raise Exception("ia-algorithm cannot be none! Accepted values are: ppo or qlearning")
-    
-    # Ajusta o parâmetro "TRAIN" se for passado como argumento
-    if args.train is not None:
-        set_train(args.train.lower() == "true")
-        print(TRAIN())
 
+def main(args):
+    print("Iniciando programa...")
+    global input_config
+    input_config = initialize_config(args)
     # Chama a função do algoritmo de IA ou lança exceção
     if args.ia_algorithm == "ppo":
         run_ppo(args.model_path)
@@ -144,8 +145,21 @@ def main(args):
 
 parser=argparse.ArgumentParser()
 parser.add_argument("--train", help="Optional, set the TRAIN config value")
+parser.add_argument("--render", help="Optional, set the RENDER config value")
 parser.add_argument("--ia-algorithm", help="ppo or qlearning, mandatory")
 parser.add_argument("--model-path", help="Path to the agent model file, mandatory")
+
+parser.add_argument("--step-reward", help="set step-reward")
+parser.add_argument("--wall-reward", help="set wall-reward")
+parser.add_argument("--hole-reward", help="set role-reward")
+parser.add_argument("--goal-reward", help="set goal-reward")
+
+parser.add_argument("--alpha", help="Set alpha")
+parser.add_argument("--gamma", help="Set gamma")
+parser.add_argument("--epsilon", help="Set epsilon")
+parser.add_argument("--alpha-decay", help="Set alpha-decay")
+parser.add_argument("--epsilon-decay", help="Set epsilon-decay")
+parser.add_argument("--decay-step", help="Set decay-step")
 
 args=parser.parse_args()
 
