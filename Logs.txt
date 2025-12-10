@@ -1,0 +1,181 @@
+(trab-ia) danielsalvini@PCdoDaniel:~/projetos/faculdade/2025_2/trab-final-IA$ bash testa-modelos.sh
+----------------------------------------------------------------
+Teste 1: Baseline (Padrão)
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -76.13
+Success Rate: 0.55
+----------------------------------------------------------------
+Teste 2: Apressado & Ganancioso
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -304.54
+Success Rate: 0.49
+----------------------------------------------------------------
+Teste 3: Lento & Seguro
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -13.86
+Success Rate: 0.30
+----------------------------------------------------------------
+Teste 4: High Stakes (Apostador)
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: 249.03
+Success Rate: 0.33
+----------------------------------------------------------------
+Teste 5: Parede de Espinhos
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -261.42
+Success Rate: 0.55
+----------------------------------------------------------------
+Teste 6: Míope
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -166.96
+Success Rate: 0.16
+----------------------------------------------------------------
+Teste 7: Hiperativo
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -52.18
+Success Rate: 0.59
+----------------------------------------------------------------
+Teste 8: Visionário
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -57.39
+Success Rate: 0.40
+----------------------------------------------------------------
+Teste 9: Explorador Nato
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -75.28
+Success Rate: 0.49
+----------------------------------------------------------------
+Teste 10: Explorador Preguiçoso
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -144.08
+Success Rate: 0.34
+----------------------------------------------------------------
+Teste 11: Maratona Pesada
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -863.73
+Success Rate: 0.38
+----------------------------------------------------------------
+Teste 12: Passeio no Parque
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: 20.02
+Success Rate: 0.49
+----------------------------------------------------------------
+Teste 13: Labirinto de Vidro
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -140.63
+Success Rate: 0.53
+----------------------------------------------------------------
+Teste 14: Morte Súbita
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -255.71
+Success Rate: 0.50
+----------------------------------------------------------------
+Teste 15: Desmotivado
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -165.05
+Success Rate: 0.42
+----------------------------------------------------------------
+Teste 16: Super Motivado
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: 224.41
+Success Rate: 0.36
+----------------------------------------------------------------
+Teste 17: Caótico
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -316.37
+Success Rate: 0.09
+----------------------------------------------------------------
+Teste 18: Cirurgião
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -300.04
+Success Rate: 0.27
+----------------------------------------------------------------
+Teste 19: Equilibrado Agressivo
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -252.32
+Success Rate: 0.36
+----------------------------------------------------------------
+Teste 20: Equilibrado Conservador
+----------------------------------------------------------------
+Iniciando programa...
+Opening agent model
+
+Results after 1000 episodes:
+Mean Reward: -36.37
+Success Rate: 0.44

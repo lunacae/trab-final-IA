@@ -41,16 +41,32 @@ def run_ppo(model_path):
             print(f"Desvio Padrão da Recompensa: {std_reward:.2f}")
         else:
             model = PPO.load(model_path)
-            state, _ = env.reset(isnumpy = True)
-            done = False
-            if input_config.RENDER:
-                env.render()
-            while not done:
-                action, _states = model.predict(state, deterministic=False)
-                state, reward, done, _, _ = env.step(action, isnumpy = True)
-                print(f"Action: {action}, Reward: {reward}")
+            total_test_reward = 0
+            test_success_count = 0
+            n_test_episodes = 1000
+
+            for i in range(n_test_episodes):
+                print(f"Testing Episode: {i+1}")
+                state, _ = env.reset(isnumpy = True)
+                done = False
+                episode_reward = 0
                 if input_config.RENDER:
                     env.render()
+                while not done:
+                    action, _states = model.predict(state, deterministic=False)
+                    state, reward, done, _, _ = env.step(action, isnumpy = True)
+                    episode_reward += reward
+                    print(f"Action: {action}, Reward: {reward}")
+                    if input_config.RENDER:
+                        env.render()
+                
+                total_test_reward += episode_reward
+                if reward == input_config.GOAL_REWARD:
+                    test_success_count += 1
+            
+            print(f"\nResults after {n_test_episodes} episodes:")
+            print(f"Mean Reward: {total_test_reward / n_test_episodes:.2f}")
+            print(f"Success Rate: {test_success_count / n_test_episodes:.2f}")
     except Exception as ex:
         print(ex)
         raise ex
@@ -99,21 +115,38 @@ def run_qlearning(model_path):
             agent.save_model(model_path + ".pkl")
             # Test the trained agent
         else:
-            state, _ = env.reset(isnumpy = False)
-            done = False
-            if input_config.RENDER:
-                env.render()
             # Load the trained agent
             agent = QLearningAgent(env.action_space, input_config.ALPHA, input_config.GAMMA, 0)
             print("Opening agent model")
             agent.load_model(model_path + '.pkl')
 
-            while not done:
-                action = agent.get_action(state)
-                state, reward, done, _, _ = env.step(action, isnumpy = False)
-                print(f"Action: {action}, Reward: {reward}")
+            total_test_reward = 0
+            test_success_count = 0
+            n_test_episodes = 1000
+
+            for i in range(n_test_episodes):
+                #print(f"Testing Episode: {i+1}")
+                state, _ = env.reset(isnumpy = False)
+                done = False
+                episode_reward = 0
                 if input_config.RENDER:
                     env.render()
+
+                while not done:
+                    action = agent.get_action(state)
+                    state, reward, done, _, _ = env.step(action, isnumpy = False)
+                    episode_reward += reward
+                    print(f"Action: {action}, Reward: {reward}")
+                    if input_config.RENDER:
+                        env.render()
+                
+                total_test_reward += episode_reward
+                if reward == input_config.GOAL_REWARD:
+                    test_success_count += 1
+
+            print(f"\nResults after {n_test_episodes} episodes:")
+            print(f"Mean Reward: {total_test_reward / n_test_episodes:.2f}")
+            print(f"Success Rate: {test_success_count / n_test_episodes:.2f}")
     except Exception as ex:
         print(ex)
         raise ex
