@@ -28,7 +28,7 @@ def run_ppo(model_path):
             )
 
             # 3. Treinamento
-            TOTAL_TIMESTEPS = 50000
+            TOTAL_TIMESTEPS = input_config.SIMMULATION_NUMBER
             print(f"\nIniciando o treinamento por {TOTAL_TIMESTEPS} passos...")
             model.learn(total_timesteps=TOTAL_TIMESTEPS)
             print("Treinamento concluído.")
@@ -46,7 +46,7 @@ def run_ppo(model_path):
             n_test_episodes = 1000
 
             for i in range(n_test_episodes):
-                print(f"Testing Episode: {i+1}")
+                # print(f"Testing Episode: {i+1}")
                 state, _ = env.reset(isnumpy = True)
                 done = False
                 episode_reward = 0
@@ -56,7 +56,7 @@ def run_ppo(model_path):
                     action, _states = model.predict(state, deterministic=False)
                     state, reward, done, _, _ = env.step(action, isnumpy = True)
                     episode_reward += reward
-                    print(f"Action: {action}, Reward: {reward}")
+                    # print(f"Action: {action}, Reward: {reward}")
                     if input_config.RENDER:
                         env.render()
                 
